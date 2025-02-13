@@ -71,6 +71,8 @@ void inserirCarta() {
 
     deck[totalCartas++] = novaCarta;
     printf("Carta adicionada com sucesso!\n");
+
+    salvarDeck();
 }
 
 
@@ -85,6 +87,9 @@ void carregarCartasDoCSV() {
     char linha[100];
     totalCartas = 0;
 
+    // Pula a primeira linha (cabeçalho)
+    fgets(linha, sizeof(linha), arquivo);
+
     while (fgets(linha, sizeof(linha), arquivo)) {
         if (totalCartas >= MAX_CARTAS) {
             printf("Número máximo de cartas atingido!\n");
@@ -92,16 +97,15 @@ void carregarCartasDoCSV() {
         }
 
         Carta novaCarta;
-        char letra;
-        int numero, superTrunfo;
+        int superTrunfo;
 
-        int resultado = sscanf(linha, "%49[^,],%c,%d,%f,%f,%f,%f,%d",
-                               novaCarta.nome, &letra, &numero,
+        int resultado = sscanf(linha, "%49[^,],%f,%f,%f,%f,%d",
+                               novaCarta.nome, 
                                &novaCarta.ataque, &novaCarta.defesa,
                                &novaCarta.velocidade, &novaCarta.hp,
                                &superTrunfo);
 
-        if (resultado == 8) {
+        if (resultado == 6) {  
             novaCarta.superTrunfo = (superTrunfo == 1);
             deck[totalCartas++] = novaCarta;
         } else {
@@ -110,8 +114,10 @@ void carregarCartasDoCSV() {
     }
 
     fclose(arquivo);
-    printf("Cartas carregadas com sucesso!\n");
+    printf("Cartas carregadas com sucesso! Total: %d\n", totalCartas);
 }
+
+
 
 
 void salvarCartasBinario() {
