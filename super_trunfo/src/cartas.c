@@ -150,9 +150,13 @@ void alterarCarta() {
     }
 
     int indice;
+    char entrada[50];  // Buffer para leitura segura de entrada do usuário
+    
     printf("\nDigite o número da carta que deseja alterar (1 a %d): ", totalCartas);
-    scanf("%d", &indice);
-    limparBuffer();
+    if (!fgets(entrada, sizeof(entrada), stdin) || sscanf(entrada, "%d", &indice) != 1) {
+        printf("Entrada inválida!\n");
+        return;
+    }
 
     if (indice < 1 || indice > totalCartas) {
         printf("Número inválido!\n");
@@ -162,42 +166,64 @@ void alterarCarta() {
     Carta *carta = &deck[indice - 1];
 
     printf("Nome da carta: ");
-    limparBuffer();  // Garante que não há lixo no buffer antes de ler
-    fgets(carta->nome, sizeof(carta->nome), stdin);
-    carta->nome[strcspn(carta->nome, "\n")] = 0;  // Remove o '\n' lido pelo fgets
+    if (!fgets(carta->nome, sizeof(carta->nome), stdin)) {
+        printf("Erro ao ler o nome!\n");
+        return;
+    }
+    carta->nome[strcspn(carta->nome, "\n")] = 0;  // Remove o '\n'
 
+    // Função auxiliar para validar entradas numéricas
+    float valor;
+    
     printf("Ataque: ");
-    while (scanf("%f", &carta->ataque) != 1) {
+    while (1) {
+        if (fgets(entrada, sizeof(entrada), stdin) && sscanf(entrada, "%f", &valor) == 1) {
+            carta->ataque = valor;
+            break;
+        }
         printf("Entrada inválida! Digite um número: ");
-        limparBuffer();
     }
 
     printf("Defesa: ");
-    while (scanf("%f", &carta->defesa) != 1) {
+    while (1) {
+        if (fgets(entrada, sizeof(entrada), stdin) && sscanf(entrada, "%f", &valor) == 1) {
+            carta->defesa = valor;
+            break;
+        }
         printf("Entrada inválida! Digite um número: ");
-        limparBuffer();
     }
 
     printf("Velocidade: ");
-    while (scanf("%f", &carta->velocidade) != 1) {
+    while (1) {
+        if (fgets(entrada, sizeof(entrada), stdin) && sscanf(entrada, "%f", &valor) == 1) {
+            carta->velocidade = valor;
+            break;
+        }
         printf("Entrada inválida! Digite um número: ");
-        limparBuffer();
     }
 
     printf("HP: ");
-    while (scanf("%f", &carta->hp) != 1) {
+    while (1) {
+        if (fgets(entrada, sizeof(entrada), stdin) && sscanf(entrada, "%f", &valor) == 1) {
+            carta->hp = valor;
+            break;
+        }
         printf("Entrada inválida! Digite um número: ");
-        limparBuffer();
     }
 
+    int escolha;
     printf("É Super Trunfo? (1-Sim / 0-Não): ");
-    while (scanf("%d", (int*)&carta->superTrunfo) != 1) {
+    while (1) {
+        if (fgets(entrada, sizeof(entrada), stdin) && sscanf(entrada, "%d", &escolha) == 1 && (escolha == 0 || escolha == 1)) {
+            carta->superTrunfo = escolha;
+            break;
+        }
         printf("Entrada inválida! Digite 1 para Sim ou 0 para Não: ");
-        limparBuffer();
     }
 
-    printf("Carta alterada com sucesso!\n");
+    printf("Carta alterada com sucesso!\n");
 }
+
 
 void excluirCarta() {
     listarCartas();
