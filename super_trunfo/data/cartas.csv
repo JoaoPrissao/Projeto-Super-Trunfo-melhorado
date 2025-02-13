@@ -1,3 +1,7 @@
 Nome,Ataque,Defesa,Velocidade,HP,SuperTrunfo
-,4.00,5.00,7.00,8.00,0
-,4.00,5.00,6.00,7.00,1
+Pikachu,5.00,4.00,4.00,3.00,0
+Bulbasaur,4.00,5.00,3.00,4.00,0
+Charmander,6.00,5.00,4.00,4.00,0
+Squirtle,4.00,6.00,5.00,2.00,0
+Mewtwo,7.00,6.00,5.00,4.00,1
+Rayquaza,8.00,7.00,6.00,5.00,0

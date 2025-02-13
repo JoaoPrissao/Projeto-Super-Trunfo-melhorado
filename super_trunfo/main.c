@@ -7,7 +7,7 @@
 
 int main() {
     int escolha;
-    carregarDeck();
+    carregarCartasDoCSV();
 
     do {
         printf("\n===== SUPER TRUNFO =====\n");

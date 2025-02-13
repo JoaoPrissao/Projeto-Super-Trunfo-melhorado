@@ -42,8 +42,10 @@ void carregarDeck() {
         fread(&totalCartas, sizeof(int), 1, arquivo);
         fread(deck, sizeof(Carta), totalCartas, arquivo);
         fclose(arquivo);
+        printf("Deck carregado com sucesso! Total de cartas: %d\n", totalCartas);
     } else {
         printf("Arquivo 'cartas.bin' não encontrado. Iniciando com um deck vazio.\n");
     }
 }
+
 
